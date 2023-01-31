@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width-decice-width, initial-scale-1.0">
+        <title>parallax scrolling website</title>
+        <link rel="stylesheet" type="text/css" href="px_ani.css">
+
+    </head>
+    <body>
+        <header>
+            <a href="#" class="logo">Logo</a> <!--logo-->
+            <ul class="navigation">
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Events</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </header>
+
+        <section class="parallax">
+            <h2 id="text">Travel Time</h2>
+            <img src="img_src/sun.png" id="sun">
+            <img src="img_src/monutain_01.png" id="m1">
+            <img src="img_src/trees_02.png" id="t2">
+            <img src="img_src/monutain_02.png" id="m2">
+            <img src="img_src/man.png" id="man">
+            <img src="img_src/trees_01.png" id="t1">
+            <img src="img_src/plants.png" id="plants">
+        </section>
+
+        
+
+        <!--next body part-->
+        <section class="sec">
+            <h2>let's see the effect:</h2>
+            <p>Parallax is a displacement or difference in the apparent position of an object viewed along two different lines of sight, and is measured by the angle or semi-angle of inclination between those two lines.[1][2] Due to foreshortening, nearby objects show a larger parallax than farther objects when observed from different positions, so parallax can be used to determine distances.<br><br>
+
+                To measure large distances, such as the distance of a planet or a star from Earth, astronomers use the principle of parallax. Here, the term parallax is the semi-angle of inclination between two sight-lines to the star, as observed when Earth is on opposite sides of the Sun in its orbit.[a] These distances form the lowest rung of what is called "the cosmic distance ladder", the first in a succession of methods by which astronomers determine the distances to celestial objects, serving as a basis for other distance measurements in astronomy forming the higher rungs of the ladder.<br><br>
+                
+                Parallax also affects optical instruments such as rifle scopes, binoculars, microscopes, and twin-lens reflex cameras that view objects from slightly different angles. Many animals, along with humans, have two eyes with overlapping visual fields that use parallax to gain depth perception; this process is known as stereopsis. In computer vision the effect is used for computer stereo vision, and there is a device called a parallax rangefinder that uses it to find range, and in some variations also altitude to a target.<br><br>
+                
+                A simple everyday example of parallax can be seen in the dashboards of motor vehicles that use a needle-style mechanical speedometer. When viewed from directly in front, the speed may show exactly 60, but when viewed from the passenger seat, the needle may appear to show a slightly different speed due to the angle of viewing combined with displacement of the needle from the plane of the numerical dial.<br><br>
+                
+                Parallax is a displacement or difference in the apparent position of an object viewed along two different lines of sight, and is measured by the angle or semi-angle of inclination between those two lines.[1][2] Due to foreshortening, nearby objects show a larger parallax than farther objects when observed from different positions, so parallax can be used to determine distances.<br><br>
+
+                To measure large distances, such as the distance of a planet or a star from Earth, astronomers use the principle of parallax. Here, the term parallax is the semi-angle of inclination between two sight-lines to the star, as observed when Earth is on opposite sides of the Sun in its orbit.[a] These distances form the lowest rung of what is called "the cosmic distance ladder", the first in a succession of methods by which astronomers determine the distances to celestial objects, serving as a basis for other distance measurements in astronomy forming the higher rungs of the ladder.<br><br>
+                
+                Parallax also affects optical instruments such as rifle scopes, binoculars, microscopes, and twin-lens reflex cameras that view objects from slightly different angles. Many animals, along with humans, have two eyes with overlapping visual fields that use parallax to gain depth perception; this process is known as stereopsis. In computer vision the effect is used for computer stereo vision, and there is a device called a parallax rangefinder that uses it to find range, and in some variations also altitude to a target.<br><br>
+                
+                A simple everyday example of parallax can be seen in the dashboards of motor vehicles that use a needle-style mechanical speedometer. When viewed from directly in front, the speed may show exactly 60, but when viewed from the passenger seat, the needle may appear to show a slightly different speed due to the angle of viewing combined with displacement of the needle from the plane of the numerical dial.
+            </p>
+        </section>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollTrigger.min.js"></script>
+
+        <script>
+            gsap.from("#m1",{
+                scrollTrigger : {
+                    scrub: true
+                },
+                y:120,
+            })
+
+            gsap.from("#m2",{
+                scrollTrigger : {
+                    scrub: true
+                },
+                y:50,
+                x:50,
+            })
+
+            gsap.from("#t2",{
+                scrollTrigger : {
+                    scrub: true
+                },
+                y:50,
+            })
+
+            gsap.from("#t1",{
+                scrollTrigger : {
+                    scrub: true
+                },
+                x:95,
+            })
+
+            gsap.from("#man",{
+                scrollTrigger : {
+                    scrub: true
+                },
+                y:50,
+                x:-80,
+            })
+
+            gsap.from("#plants",{
+                scrollTrigger : {
+                    scrub: true
+                },
+                x:-100,
+            })
+
+            gsap.from("#text",{
+                scrollTrigger : {
+                    scrub: true
+                },
+                y:-360,
+            })
+
+            
+        </script>
+
+    </body>
+</html>
