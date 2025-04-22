@@ -406,3 +406,230 @@ INSERT INTO Employee VALUES (1, 'John Doe', '12345', '123 St.', 60000, 'M', '199
 INSERT INTO Project VALUES (101, 'Website Dev', 1001, 'NY', 1);  
 INSERT INTO Works_On VALUES (1, 101, 40);  
 INSERT INTO Dependent VALUES (1, 1, 'Jane Doe', '2015-05-05', 'Daughter');  
+
+
+_--------------------------+--++
+
+
+HTML + Bootstrap + JS (All-in-One File)
+html
+Copy code
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Feedback</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    .star {
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #ddd;
+    }
+    .star.selected {
+      color: gold;
+    }
+    .char-count {
+      font-size: 0.9rem;
+      text-align: right;
+      color: #6c757d;
+    }
+  </style>
+</head>
+<body class="bg-light">
+
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow">
+        <div class="card-header text-center bg-primary text-white">
+          <h4>Product Feedback</h4>
+        </div>
+        <div class="card-body">
+          <div id="alertBox"></div>
+          <form id="feedbackForm" novalidate>
+            <!-- Full Name -->
+            <div class="mb-3">
+              <label for="fullName" class="form-label">Full Name</label>
+              <input type="text" id="fullName" class="form-control" placeholder="Enter your name" />
+              <div class="text-danger small" id="nameError"></div>
+            </div>
+
+            <!-- Email -->
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" id="email" class="form-control" placeholder="example@domain.com" />
+              <div class="text-danger small" id="emailError"></div>
+            </div>
+
+            <!-- Product Category -->
+            <div class="mb-3">
+              <label for="category" class="form-label">Product Category</label>
+              <select id="category" class="form-select">
+                <option value="">Choose category</option>
+                <option>Electronics</option>
+                <option>Fashion</option>
+                <option>Grocery</option>
+              </select>
+            </div>
+
+            <!-- Rating -->
+            <div class="mb-3">
+              <label class="form-label d-block">Rating</label>
+              <div id="stars">
+                <span class="star" data-value="1">&#9733;</span>
+                <span class="star" data-value="2">&#9733;</span>
+                <span class="star" data-value="3">&#9733;</span>
+                <span class="star" data-value="4">&#9733;</span>
+                <span class="star" data-value="5">&#9733;</span>
+              </div>
+              <div class="text-danger small" id="ratingError"></div>
+            </div>
+
+            <!-- Feedback -->
+            <div class="mb-3">
+              <label for="feedback" class="form-label">Feedback</label>
+              <textarea id="feedback" class="form-control" rows="4" placeholder="Write your feedback..."></textarea>
+              <div class="char-count" id="charCount">0 / 500</div>
+              <div class="text-danger small" id="feedbackError"></div>
+            </div>
+
+            <!-- Submit -->
+            <div class="d-grid">
+              <button type="submit" class="btn btn-success">Submit Feedback</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const stars = document.querySelectorAll('.star');
+  let selectedRating = 0;
+
+  stars.forEach(star => {
+    star.addEventListener('click', () => {
+      selectedRating = parseInt(star.getAttribute('data-value'));
+      updateStars();
+    });
+  });
+
+  function updateStars() {
+    stars.forEach(star => {
+      star.classList.toggle('selected', parseInt(star.dataset.value) <= selectedRating);
+    });
+  }
+
+  const feedbackForm = document.getElementById('feedbackForm');
+  const fullName = document.getElementById('fullName');
+  const email = document.getElementById('email');
+  const feedback = document.getElementById('feedback');
+  const alertBox = document.getElementById('alertBox');
+  const charCount = document.getElementById('charCount');
+
+  feedback.addEventListener('input', () => {
+    charCount.textContent = `${feedback.value.length} / 500`;
+  });
+
+  feedbackForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    clearErrors();
+    let valid = true;
+
+    // Name validation
+    if (fullName.value.trim() === '') {
+      showError('nameError', 'Name is required');
+      valid = false;
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email.value.trim() === '') {
+      showError('emailError', 'Email is required');
+      valid = false;
+    } else if (!emailRegex.test(email.value.trim())) {
+      showError('emailError', 'Enter a valid email');
+      valid = false;
+    }
+
+    // Feedback length
+    if (feedback.value.trim().length < 30) {
+      showError('feedbackError', 'Feedback must be at least 30 characters');
+      valid = false;
+    }
+
+    // Rating validation
+    if (selectedRating === 0) {
+      showError('ratingError', 'Please select a rating');
+      valid = false;
+    }
+
+    if (valid) {
+      const formData = {
+        name: fullName.value.trim(),
+        email: email.value.trim(),
+        category: document.getElementById('category').value,
+        rating: selectedRating,
+        feedback: feedback.value.trim()
+      };
+      localStorage.setItem('productFeedback', JSON.stringify(formData));
+
+      alertBox.innerHTML = `<div class="alert alert-success">Thank you for your feedback!</div>`;
+      feedbackForm.reset();
+      selectedRating = 0;
+      updateStars();
+      charCount.textContent = '0 / 500';
+    } else {
+      alertBox.innerHTML = `<div class="alert alert-danger">Please fix the errors and try again.</div>`;
+    }
+  });
+
+  function showError(id, message) {
+    document.getElementById(id).textContent = message;
+  }
+
+  function clearErrors() {
+    ['nameError', 'emailError', 'feedbackError', 'ratingError'].forEach(id => {
+      document.getElementById(id).textContent = '';
+    });
+    alertBox.innerHTML = '';
+  }
+</script>
+
+</body>
+</html>
+Features Included:
+Responsive Bootstrap layout with card
+
+Star rating with clickable icons (★)
+
+Live feedback character count
+
+JS validation:
+
+Name & Email not empty
+
+Valid Email format
+
+Feedback minimum 30 characters
+
+Rating required
+
+Shows errors near fields
+
+Success & error alerts using Bootstrap
+
+LocalStorage saves feedback temporarily
+
+Let me know if you want this split into separate HTML/CSS/JS files, or want to expand it into a backend form later!
+
+
+
+
+
+
+
+
